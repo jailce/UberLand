@@ -1,4 +1,3 @@
-
 public class UberX extends Veiculos {
 	
 	public static final double TARIFA_MINIMA = 4.00;
@@ -20,14 +19,20 @@ public class UberX extends Veiculos {
 	public boolean isConfortoBasico() {
 		return confortoBasico;
 	}
-	
+
+
+	// @Override garante que este método está substituindo corretamente o da classe pai.
+	@Override
 	public double getTarifaMinima() {
 		return TARIFA_MINIMA;
 	}
+
+	@Override
 	public double getCustoKm() {
 		return CUSTO_POR_KM;
 	}
 
+	@Override
 	public double calcularCustoViagem(double distanciaKm) {
 	   double custoTotal = super.calcularCustoViagem(distanciaKm);
 	    

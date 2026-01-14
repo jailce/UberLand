@@ -1,4 +1,3 @@
-
 public class Pessoa {
 	private String nome;
 	private String cpf;
@@ -7,9 +6,9 @@ public class Pessoa {
 	protected float avaliacao;
 	
 	public Pessoa (String nome, String cpf, String datanasc) {
-		setNome(nome);
-		setCpf(cpf);
-		setDataNasc (datanasc);
+		this.nome = nome;
+		this.cpf = cpf;
+		this.datanasc = datanasc;
 		this.qtdecorridas = 0;
 		this.avaliacao = 0;
 	}
@@ -136,8 +135,7 @@ public class Pessoa {
 	public void calculaAvalicao(float nota) {
 		if (nota >= 0 && nota <=10)
 			avaliacao = (avaliacao * qtdecorridas + nota)/(qtdecorridas + 1);
-		else
-			return;
+		
 	}
 	public void exibirDadosPESSOA(){
 		System.out.println("Nome: " + nome);			

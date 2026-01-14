@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Motorista extends Pessoa {
@@ -6,13 +5,18 @@ public class Motorista extends Pessoa {
 	private String cnh;
 	private String nomesocial;
 	private boolean ativo;
-	private List<Veiculos> veiculos;
+
+	// O 'final' garante que a lista de veículos seja criada apenas uma vez (no construtor).
+    // Isso impede que a lista inteira seja substituída por outra ou vire 'null' por acidente,
+    // mas ainda permite adicionar e remover veículos normalmente.
+    private final List<Veiculos> veiculos;
+
 	
 	public Motorista(String nome, String cpf, String datanasc, String end, String cnh, String nomesocial) {
 		super (nome, cpf, datanasc);
-		setEnd(end);
-		setCnh (cnh);
-		setNomesocial(nomesocial);
+		this.end = end;
+		this.cnh = cnh;
+		this.nomesocial = nomesocial;
 		this.ativo = true;
 		veiculos = new ArrayList<>();
 	}
@@ -39,7 +43,7 @@ public class Motorista extends Pessoa {
 			this.nomesocial = nomesocial;
 	}
 
-	public boolean isAtivo() {
+	public boolean getAtivo() {
 		return ativo;
 	}
 
@@ -69,5 +73,6 @@ public class Motorista extends Pessoa {
 		System.out.println("CNH: " + cnh);
 		System.out.println("Status: " + ativo);
 	}
-	
+
+    
 }

@@ -20,17 +20,18 @@ public class Veiculos {
                               // carro deletado=> ativo=false e deletado = true	
     
     public Veiculos(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo) {
-        setPlaca(placa);
-        setChassi(chassi);
-        setCor(cor);
-        setCapacidade(capacidade); 
-        setAno(ano);
-        setMarca(marca);
-        setModelo(modelo);
-        this.status = DISPONIVEL;
-        ativo = false;
-		deletado = false;
-    }
+    	this.placa = placa;
+    	this.chassi = chassi;
+    	this.cor = cor;
+    	this.capacidade = capacidade;
+    	this.ano = ano;
+    	this.marca = marca;
+    	this.modelo = modelo;
+    
+    	this.status = DISPONIVEL;
+    	this.ativo = false; // Pode usar 'this.ativo' se quiser manter o padrão
+    	this.deletado = false;
+	}
     
     // Getters:
     public int getStatus() {
@@ -88,7 +89,7 @@ public class Veiculos {
 			this.modelo = modelo;
 	}
 	public void setStatus(int status) {
-		if (deletado== false)
+		if (deletado == false)
 	        this.status = status;
 	    }
 	
