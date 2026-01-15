@@ -1,0 +1,86 @@
+a) Cadastro de Motorista Informações obrigatórias: 
+-CPF
+-endereço
+-CNH
+-nome
+-data de nascimento
+-nome social (visível ao cliente).
+
+b) Status do Motorista Funcionalidade para ativar ou desativar motoristas no sistema
+
+c) Um motorista pode ter muitos veiculos vinculados
+
+d) Dados do veiculos
+    - placa
+    - chassi
+    - cor
+    - capacidade
+    - ano
+    - marca
+    - modelo.
+    Obs: Se o motorista for desativado, seus veículos também são. Se o veículo for desativado, o motorista continua ativo.
+
+e) Status de Disponibilidade do Veículo Estados possíveis:
+    - Disponível para viagens.
+    - Não disponível.
+    - Em viagem.
+    - Finalizando viagem (ativado automaticamente 5 min antes do fim).
+
+f)  - UberX 
+        - Conforto básico
+        - Ar condicionado
+        - taxa minima
+        Fórmula base = (Km * Custo/km) + Tarifa Mínima + tx ar 
+
+    - UberComfort
+        - Ar condicionado dual zone
+        - Espaço Extra
+        - Banco Reclinavel
+        - taxa minima e por km diferentes
+        Fórmula base = (Km * Custo/km) + Tarifa Mínima + 2* tx espaço extra  + 2* ar dualzone
+    
+    - UberBlack
+        - Ar condicionado dual zone
+        - Espaço Extra
+        - Banco Reclinavel
+        - Rodas de liga leve
+        - Numero de malas
+         - taxa minima e por km diferentes
+
+        
+g) Cálculo do Custo da Viagem Fórmula base = (Km * Custo/km) + Tarifa Mínima + (numero de malas * tx malas)
+
+h)Cadastro de Usuário (Passageiro) Dados: 
+- Nome
+- celular
+- CPF
+- email
+- nascimento
+- sexo
+- forma de pagamento preferida.
+
+i) Sistema de Avaliação Armazena a nota média e o número de corridas tanto para motoristas quanto para usuários (visível para ambos).
+
+j) Cliente VIP Usuários com mais de X viagens tornam-se VIPs.
+
+Benefício: Prioridade com motoristas bem avaliados e uma porcentagem de desconto (definida por estratégia confidencial).
+
+k) Registro e Cancelamento de Corrida Registra origem, destino e distância estimada na solicitação.
+
+Obs: A corrida pode ser cancelada a qualquer momento por motorista ou cliente (o sistema deve registrar quem cancelou).
+
+l) Métricas da Corrida Deve armazenar: 
+    - Data/hora da solicitação
+    - horário de chegada do Motorista na origem e no destino, 
+    - duração (min), 
+    - distância real (km)
+    - valor final.
+
+m) Valor Extra Permite adicionar um valor extra ao custo calculado da corrida, caso o passageiro deseje.
+
+n) Repasse Financeiro Divisão do valor: Uma porcentagem fixa para o UberLand (atualmente 60%, mas ajustável) e o restante para o motorista.
+
+o) Status Final e Pagamento Status possíveis da corrida: 
+    - Cancelada antes, Cancelada durante ou Realizada. 
+    - Deve registrar a forma de pagamento utilizada
+

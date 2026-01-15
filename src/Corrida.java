@@ -1,249 +1,238 @@
-import java.time.Duration;
-import java.time.LocalDateTime; 
+import java.time.Duration; // Import novo (do segundo código) para calcular tempo
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class Corrida extends RegrasUberLand {
+public class Corrida extends RegrasUberLand { 
 
-    // Constantes
+    // --- CONSTANTES (Mantidas e Organizadas) ---
     public static final int SOLICITADA = 0;
-    public static final int EM_ANDAMENTO = 1;
+    public static final int EM_ANDAMENTO = 1;   
     public static final int FINALIZADA = 2;
     public static final int CANCELADA = 3;
-    public static final double VALOR_EXTRA = 5.00; // Constantes costumam ser UPPERCASE
     
-    // Atributos
+  
+
+    // --- ASSOCIAÇÕES ---
     private Cliente cliente;
     private Veiculos veiculo;
+    private Motorista motorista;
+
+    // --- VIAGEM ---
     private String origem;
     private String destino;
-    private LocalDateTime dataHoraSolicitacao;
-    private LocalDateTime dataHoraOrigem;
-    private LocalDateTime dataHoraDestino;
-    private int duracaoViagem; // em minutos
     private double distanciaRealKm;
+    private String motivoCancelamento;
+    
+    
+    // private int duracaoViagem; // em minutos
+    // private boolean pagarValorExtra; // Se o cliente pediu algo a mais
+    // private boolean canceladaPor; // true = cliente, false = motorista
+    // private String formasPagamento;
+
+    // --- TEMPOS ---
+    private LocalDateTime dataHoraSolicitacao;
+    private LocalDateTime dataHoraInicio; // chegada do motorista
+    private LocalDateTime dataHoraFim;    // chegada ao destino final
+
+    // --- PREÇOS E TAXAS ---
     private double valorTotal;
-    private boolean pagarValorExtra;
     private double valorMotorista;
     private double valorUberLand;
-    private int statusCorrida; // 0 - solicitada, 1 - em andamento, 2 - finalizada, 3 - cancelada
-    private boolean canceladaPor; // true = cliente, false = motorista
-    private String formasPagamento;
+    
+    private static final double VALOR_EXTRA = 5.00; 
+    private static final double PORCENTAGEM_APP = 0.40; 
 
-    // --- Construtor ---
-    public Corrida(Cliente cliente, Veiculos veiculo, String origem, String destino, String formasPagamento) {
-        // Inicializa com segurança
-        this.cliente = cliente;
-        this.veiculo = veiculo;
-        this.origem = origem;
-        this.destino = destino;
-        this.formasPagamento = formasPagamento;
-        
-        this.dataHoraSolicitacao = LocalDateTime.now();
+    // --- STATUS ---
+    private int statusCorrida; 
+
+    // ==================================================================================
+    // CONSTRUTOR (Mantive o SEU para funcionar com seu Main atual)
+    // ==================================================================================
+    public Corrida(Cliente cliente, Veiculos veiculo, Motorista motorista, String origem, String destino, LocalDateTime dataHoraSolicitacao) {
+        setCliente(cliente);
+        setVeiculo(veiculo);
+        setMotorista(motorista);
+        setOrigem(origem);
+        setDestino(destino);
+        setDataHoraSolicitacao(dataHoraSolicitacao);
         this.statusCorrida = SOLICITADA;
+        
+        
+        // this.pagarValorExtra = false; 
     }
 
-    // --- Getters e Setters ---
+    // ==================================================================================
+    // GETTERS E SETTERS
+    // ==================================================================================
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+    // ---  Getters/Setters  ---
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public Cliente getCliente() { return cliente; }
 
-    public void setCliente(Cliente cliente) {
-        if (cliente != null) {
-            this.cliente = cliente;
-        } else {
-            System.out.println("AVISO: Tentativa de definir Cliente NULO na corrida.");
-        }
-    }
+    public void setMotorista(Motorista motorista) { this.motorista = motorista; }
+    public Motorista getMotorista() { return motorista; }
 
-    public Veiculos getVeiculo() {
-        return veiculo;
-    }
+    public Veiculos getVeiculo() { return veiculo; }
+    public void setVeiculo(Veiculos veiculo) { this.veiculo = veiculo; }
 
-    public void setVeiculo(Veiculos veiculo) {
-        if (veiculo != null) {
-            this.veiculo = veiculo;
-        } else {
-            System.out.println("AVISO: Tentativa de definir Veículo NULO na corrida.");
-        }
-    }
+    public String getOrigem() { return origem; }
+    public void setOrigem(String origem) { this.origem = origem; }
 
-    public String getOrigem() {
-        return origem;
-    }
+    public String getDestino() { return destino; }
+    public void setDestino(String destino) { this.destino = destino; }
 
-    public void setOrigem(String origem) {
-        if (origem != null && !origem.isEmpty()) {
-            this.origem = origem;
-        }
-    }
+    public LocalDateTime getDataHoraSolicitacao() { return dataHoraSolicitacao; }
+    public void setDataHoraSolicitacao(LocalDateTime dataHoraSolicitacao) { this.dataHoraSolicitacao = dataHoraSolicitacao; }
 
-    public String getDestino() {
-        return destino;
-    }
+    public void setStatusCorrida(int statusCorrida) { this.statusCorrida = statusCorrida; }
 
-    public void setDestino(String destino) {
-        if (destino != null && !destino.isEmpty()) {
-            this.destino = destino;
-        }
-    }
-
-    public LocalDateTime getDataHoraSolicitacao() {
-        return dataHoraSolicitacao;
-    }
-
-    public int getStatusCorrida() {
-        return statusCorrida;
-    }
-
-    public int getDuracaoViagem() {
-        return duracaoViagem;
-    }
-
-    public double getDistaciaRealKm() {
-        return distanciaRealKm;
-    }
-
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public boolean isPagarValorExtra() {
-        return pagarValorExtra;
-    }
-
+    // --- Getters e Setters Gabriel  ---
+    /*
     public void setPagarValorExtra(boolean pagarValorExtra) {
-        // Só permite alterar a regra de valor extra se a corrida ainda não começou
         if (statusCorrida == SOLICITADA) {
             this.pagarValorExtra = pagarValorExtra;
         }
     }
+    
+    public boolean isPagarValorExtra() { return pagarValorExtra; }
+    
+    public int getDuracaoViagem() { return duracaoViagem; }
+    
+    public void setFormasPagamento(String formasPagamento) { this.formasPagamento = formasPagamento; }
+    public String getFormasPagamento() { return formasPagamento; }
+    */
 
-    public double getValorMotorista() {
-        return valorMotorista;
-    }
-
-    public void setValorMotorista(double valorMotorista) {
-        this.valorMotorista = valorMotorista;
-    }
-
-    public double getValorUberLand() {
-        return valorUberLand;
-    }
-
-    public void setValorUberLand(double valorUberLand) {
-        this.valorUberLand = valorUberLand;
-    }
-
-    public String getFormasPagamento() {
-        return formasPagamento;
-    }
-
-    public void setFormasPagamento(String formasPagamento) {
-        if (formasPagamento != null && !formasPagamento.isEmpty()) {
-            this.formasPagamento = formasPagamento;
+    // Seu getStatusCorrida (String) mantido
+    public String getStatusCorridaFormatado() { // Mudei o nome levemente para não dar conflito com o int getStatus
+        switch (statusCorrida) {
+            case SOLICITADA: return "Solicitada";
+            case EM_ANDAMENTO: return "Em Andamento";
+            case FINALIZADA: return "Finalizada";
+            case CANCELADA: return "Cancelada";
+            default: return "Status Desconhecido";
         }
+      
+   
     }
+    
+    // getter simples para o numero
+    public int getStatusCorrida() { return statusCorrida; }
 
-    public void setCanceladaPor(boolean canceladaPor) {
-        this.canceladaPor = canceladaPor; // Lógica simplificada
-    }
-
-    public boolean isCanceladaPorCliente() {
-        return statusCorrida == CANCELADA && canceladaPor;
-    }
-
-    public boolean isCanceladaPorMotorista() {
-        return statusCorrida == CANCELADA && !canceladaPor;
-    }
-
-    // --- Métodos de Regra de Negócio ---
+    // ==================================================================================
+    // MÉTODOS DE LÓGICA
+    // ==================================================================================
 
     public void iniciarCorrida() {
-        if (statusCorrida == SOLICITADA) {
+        if (this.statusCorrida == SOLICITADA) {
             this.statusCorrida = EM_ANDAMENTO;
-            this.dataHoraOrigem = LocalDateTime.now();
+            this.dataHoraInicio = LocalDateTime.now(); // Captura hora inicio
+            System.out.println("Corrida iniciada com sucesso.");
         }
     }
 
-    public void finalizarCorrida(double distanciaRealKm) {
-        // Validação de segurança: Não finaliza se não tiver veículo ou se a distância for inválida
-        if (statusCorrida != EM_ANDAMENTO || distanciaRealKm <= 0) {
-            System.out.println("Erro ao finalizar: Corrida não iniciada ou distância inválida.");
-            return;
-        }
+    public void finalizarCorrida(double distanciaRealKm, double valorTotalFinal, double valorUberLandFinal) { 
         
-        if (veiculo == null) {
-            System.out.println("ERRO FATAL: Veículo não atribuído. Não é possível calcular custos.");
-            return;
-        }
-
-        this.statusCorrida = FINALIZADA;
-        this.dataHoraDestino = LocalDateTime.now();
-        this.duracaoViagem = calcularDuracaoViagem();
-        this.distanciaRealKm = distanciaRealKm;
         
-        calcularValorViagem();
+        if (this.statusCorrida == EM_ANDAMENTO) {
+            this.statusCorrida = FINALIZADA;
+            this.dataHoraFim = LocalDateTime.now(); // Captura hora fim
+            this.distanciaRealKm = distanciaRealKm; // Usa o parametro recebido
+            
         
-        // Assume que RegrasUberLand tem um método estático (static)
-        RegrasUberLand.calcularDivisaoCorrida(this);
-    }
+            this.valorTotal = valorTotalFinal;
+            this.valorMotorista = valorTotalFinal - valorUberLandFinal; 
+            this.valorUberLand = valorUberLandFinal;
+            
+            
+            /*
+            // 1. Calcular Duração
+            if (dataHoraInicio != null && dataHoraFim != null) {
+                this.duracaoViagem = (int) Duration.between(dataHoraInicio, dataHoraFim).toMinutes();
+            }
+            
+            // 2. Calcular Custo usando o Veículo (Polimorfismo)
+            double custoBase = veiculo.calcularCustoViagem(this.distanciaRealKm);
+            
+            // 3. Adicionar Extra
+            if (this.pagarValorExtra) {
+                this.valorTotal = custoBase + VALOR_EXTRA;
+            } else {
+                this.valorTotal = custoBase;
+            }
+            
+            // 4. Calcular Divisão (Exemplo chamando classe externa)
+            // RegrasUberLand.calcularDivisaoCorrida(this);
+            */
 
-    private int calcularDuracaoViagem() {
-        if (dataHoraOrigem != null && dataHoraDestino != null) {
-            return (int) Duration.between(dataHoraOrigem, dataHoraDestino).toMinutes();
-        }
-        return 0;
-    }
-
-    public void cancelarCorrida(boolean canceladaPor) {
-        if (statusCorrida == SOLICITADA || statusCorrida == EM_ANDAMENTO) {
-            this.statusCorrida = CANCELADA;
-            setCanceladaPor(canceladaPor);
-        }
-    }
-
-    private void calcularValorViagem() {
-        // Proteção extra caso chamem esse método manualmente sem ter veículo
-        if (veiculo == null) {
-            System.out.println("Erro: Não há veículo para calcular o custo.");
-            return;
-        }
-
-        double custoBase = veiculo.calcularCustoViagem(distanciaRealKm);
-
-        if (pagarValorExtra) {
-            this.valorTotal = custoBase + VALOR_EXTRA;
+            System.out.println("Corrida finalizada com sucesso.");
         } else {
-            this.valorTotal = custoBase;
+            System.out.println("A corrida nao esta em andamento.");
         }
     }
 
-    public void exibirDadosCorrida() {
-        System.out.println("----- Dados da Corrida -----");
+    public void cancelarCorrida(String motivoCancelamento) {
+     
+        if(this.statusCorrida != FINALIZADA){
+               this.statusCorrida = CANCELADA; 
+                this.motivoCancelamento = motivoCancelamento;
+                System.out.println("Corrida cancelada pelo " + motivoCancelamento);    
+
+        }
+
+        System.out.println("Corrida cancelada");
+        
+       
+    }
+
+    // ==================================================================================
+    // EXIBIÇÃO
+    // ==================================================================================
+
+    public void exibirDadosCorrida(){
+        System.out.println("----- Viagem: -----");
         System.out.println("Origem: " + getOrigem());
         System.out.println("Destino: " + getDestino());
+        System.out.println("Data Solicitada: " + getDataHoraSolicitacao());
+        System.out.println("Status: " + getStatusCorridaFormatado()); // Usa o texto bonito
         
-        String statusTexto = switch (statusCorrida) {
-            case SOLICITADA -> "Solicitada";
-            case EM_ANDAMENTO -> "Em Andamento";
-            case FINALIZADA -> "Finalizada";
-            case CANCELADA -> "Cancelada";
-            default -> "Desconhecido";
-        };
-		
-        System.out.println("Status da Corrida: " + statusTexto);
+        System.out.println("----- Passageiro -----");      
+        // Proteção contra NullPointerException (Sugestão do cód novo)
+        if (cliente != null) System.out.println("Cliente: " + cliente.getNome());
 
+        System.out.println("----- Motorista -----");   
+        if (motorista != null) System.out.println("Condutor: " + motorista.getNomeSocial());
+        
         if (veiculo != null) {
-            System.out.println("Veículo: " + veiculo.getPlaca() + " (" + veiculo.getModelo() + ")");
-        } else {
-            System.out.println("Veículo: Não atribuído!");
+            System.out.println("Carro: " + veiculo.getMarca() + " " + veiculo.getModelo());
+            System.out.println("Placa: " + veiculo.getPlaca());   
+            // System.out.println("Categoria: " + veiculo.getClass().getSimpleName()); // Dica do código novo
         }
+    }
+
+    public void exibirDadosCorridaFinalizada(){
+        System.out.println("----- RELATÓRIO FINAL -----");
+        System.out.println("Origem: " + getOrigem());
+        System.out.println("Destino: " + getDestino());
+        System.out.println("Distancia percorrida: " + distanciaRealKm + " km");
         
-        if (cliente != null) {
-            // Supondo que Cliente tem getNome(), se não tiver, ajuste aqui
-             System.out.println("Cliente: " + cliente.getNome()); 
-        }
+        // System.out.println("Duração: " + duracaoViagem + " min"); // Novo recurso
         
-        System.out.println("Valor Total: R$ " + String.format("%.2f", valorTotal));
+        System.out.println("Valor Total: R$ " + valorTotal);
+        System.out.println("Status: Finalizada");
+
+        System.out.println("----- Taxas Detalhadas ----");
+        if (veiculo != null) System.out.println("Categoria: " + veiculo.getClass().getSimpleName());
+        
+        System.out.println("Motorista ganha: R$ " + valorMotorista);
+        System.out.println("UberLand retém: R$ " + valorUberLand);
+    }
+
+    public void exibirDadosCorridaCancelada(){
+        System.out.println("----- CORRIDA CANCELADA -----");
+        System.out.println("Origem: " + getOrigem());
+        System.out.println("Destino: " + getDestino());
+        System.out.println("Status: Cancelada");
+        // if (canceladaPor) System.out.println("Cancelada pelo Cliente");
+        // else System.out.println("Cancelada pelo Motorista");
     }
 }

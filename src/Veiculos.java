@@ -138,4 +138,9 @@ public class Veiculos {
         System.out.println("Marca: " + marca);
         System.out.println("Modelo: " + modelo);
     }
+
+	public Object getMotorista() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getMotorista'");
+	}
 }

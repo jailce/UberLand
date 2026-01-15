@@ -3,8 +3,8 @@ import java.util.*;
 public class Motorista extends Pessoa {
 	private String end;
 	private String cnh;
-	private String nomesocial;
-	private boolean ativo;
+	private String nomeSocial;
+	private boolean statusMotorista;
 
 	// O 'final' garante que a lista de veículos seja criada apenas uma vez (no construtor).
     // Isso impede que a lista inteira seja substituída por outra ou vire 'null' por acidente,
@@ -12,12 +12,12 @@ public class Motorista extends Pessoa {
     private final List<Veiculos> veiculos;
 
 	
-	public Motorista(String nome, String cpf, String datanasc, String end, String cnh, String nomesocial) {
+	public Motorista(String nome, String cpf, String datanasc, String end, String cnh, boolean statusMotorista, String nomeSocial) { 
 		super (nome, cpf, datanasc);
 		this.end = end;
 		this.cnh = cnh;
-		this.nomesocial = nomesocial;
-		this.ativo = true;
+		this.nomeSocial = nomeSocial;
+		this.statusMotorista = statusMotorista;
 		veiculos = new ArrayList<>();
 	}
 	
@@ -35,23 +35,26 @@ public class Motorista extends Pessoa {
 		if(cnh != null && cnh.length() == 11)
 			this.cnh = cnh;
 	}
-	public String getNomesocial() {
-		return nomesocial;
+	public String getNomeSocial() {
+		return nomeSocial;
 	}
-	public void setNomesocial(String nomesocial) {
-		if (nomesocial != null && nomesocial.length()>0)
-			this.nomesocial = nomesocial;
+	public void setNomeSocial(String nomeSocial) {
+		if (nomeSocial != null && nomeSocial.length()>0)
+			this.nomeSocial = nomeSocial;
 	}
 
-	public boolean getAtivo() {
-		return ativo;
+	public boolean getStatusMotorista() {
+		return statusMotorista;
+	}
+	public void setStatusMotorista(boolean statusMotorista) {
+		this.statusMotorista = statusMotorista;
 	}
 
 	public void ativar() {
-		this.ativo= true;
+		this.statusMotorista = true;
 	}
 	public void desativar() {
-		this.ativo = false;
+		this.statusMotorista = false;
 				
 		for (int i = 0; i < veiculos.size(); i++) {
 			veiculos.get(i).desativar();
@@ -65,14 +68,25 @@ public class Motorista extends Pessoa {
 		veiculos.remove(v);
 	}
 	
-	public void exibirDadosMOTORISTA(){
+	public void exibirDadosMotorista(){
 		System.out.println("=== DADOS DO MOTORISTA ===");
 		exibirDadosPESSOA();
-		System.out.println("Nome social: " + nomesocial);
+		System.out.println("Nome social: " + nomeSocial);
 		System.out.println("Endereço: " + end);
 		System.out.println("CNH: " + cnh);
-		System.out.println("Status: " + ativo);
+		System.out.println("Status: " + true);
 	}
 
+	public void listarVeiculos() {
+		System.out.println("=== VEÍCULOS DO MOTORISTA ===");
+		if (veiculos.isEmpty()) {
+			System.out.println("Nenhum veículo cadastrado.");
+		} else {
+			for (Veiculos v : veiculos) {
+				v.exibirDadosV();
+				System.out.println("-----------------------");
+			}
+		}
+	}
     
 }

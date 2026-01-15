@@ -74,8 +74,8 @@ public class Cliente extends Pessoa{
 
 		this.pagamento = switch (pagamento) {
 			case "PIX" -> "PIX";
-			case "Dinheiro" -> "Dinheiro";
-			default -> "Cartao de Credito";
+			case "DINHEIRO" -> "DINHEIRO";
+			default -> "CARTAO DE CREDITO";
 		};
 			 
 	}
