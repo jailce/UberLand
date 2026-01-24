@@ -67,8 +67,8 @@ public class testeUberLand {
 
 
 
-		if (m.getStatus() == true) {
-			m.exibirDadosMOTORISTA();
+		if (m.getStatusMotorista() == true) {
+			m.exibirDadosMotorista();
 			corrida1.exibirDadosCorrida();
 	}	else
 		System.out.println("Motorista inativo");
