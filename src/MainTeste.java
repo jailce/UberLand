@@ -4,7 +4,7 @@ public class MainTeste {
         // 1. Criar Motorista e Veículos
         Motorista mot1 = new Motorista("João", "111.111.111-11", ...);
         Veiculo carroX = new UberX("ABC-1234", ..., true); // Tem Ar Condicionado (Taxa extra!)
-        Veiculo carroBlack = new UberBlack("PRE-9999", ..., 3); // Tem 3 malas (Taxa extra!)
+        Veiculo carroBlack = new UberBlack(); // Tem 3 malas (Taxa extra!)
         
         mot1.adicionarVeiculo(carroX);
         mot1.adicionarVeiculo(carroBlack);
