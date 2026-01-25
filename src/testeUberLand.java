@@ -5,7 +5,7 @@ public class testeUberLand {
 	public static void main(String[] args) {
    	// --- PREPARAÇÃO DO AMBIENTE ---
         // 1. Criar Motorista e Veículos
-		Motorista m = new Motorista("Sergio", "22169293876", "08091981", "Rua Brasil,10", "12345678901", true, "Sergio");
+		Motorista m = new Motorista("Sergio", "22169293876", "08091981", "Rua Brasil,10", "12345678901", true, "Sergim");
 		UberX carroX = new UberX("ABC1234", "12345678901234567", "Preto", 4, 2020, "Toyota", "Corolla", true, true);
 		UberBlack carroBlack = new UberBlack("DEF5678", "98765432109876543", "Branco", 4, 2021, "BMW", "Serie 5", true, true,  3);
 		UberComfort carroComfort = new UberComfort("GHI9012", "19283746556473829", "Prata", 4, 2019, "Honda", "Civic", true, true, true);
@@ -24,13 +24,13 @@ public class testeUberLand {
 		// ====================== CENÁRIO 1: A CORRIDA PERFEITA (UBER X) =================================
 		    System.out.println(">>> Teste 1: Corrida Finalizada com Sucesso (UberX com Ar)");
 
-		Corrida corrida1 = new Corrida(null, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		Corrida corrida1 = new Corrida(passageiro, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
 		// Simula o fluxo
 		corrida1.iniciarCorrida();
 		
 		//Finaliza a viagem passando km e minutos (aqui o cálculo acontece)
 
-        corrida1.finalizarCorrida(10); //10km, 20 minutos
+        corrida1.finalizarCorrida(10, 0.0); //10km, 20 minutos
 
 		imprimirRelatorio(corrida1);
 
@@ -72,18 +72,20 @@ public class testeUberLand {
 		
     // ======================= MÉTODO AUXILIAR PARA O RELATÓRIO ================
 
-	public void imprimirRelatorio(Corrida c){
-	System.out.println("Status: " + c.getStatusCorrida());
-	System.out.println("Motorista: " + c.getMotorista().getNome());
+	public static void imprimirRelatorio(Corrida c){
+	System.out.println("Status: " + c.getStatusCorridaFormatado());
+	System.out.println("Motorista: " + c.getMotorista().getNomeSocial());
 	System.out.println("Cliente: " + c.getCliente().getNome());
-	System.out.println("Veículo: " + c.getVeiculo().getMarca() + c.getVeiculo().getCor());
+	System.out.println("Veículo: " + c.getVeiculo().getModelo() +  " " + c.getVeiculo().getMarca() +  " " + c.getVeiculo().getCor());
 	System.out.println("Origem: " + c.getOrigem());
 	System.out.println("Destino: " + c.getDestino());
 	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao());
-	//System.out.println("Distância Real Percorrida (km): " + c.getDistanciaRealKm());
-	//System.out.println("Valor Total da Corrida: " + c.getValorTotal());
-	//System.out.println("Valor para Motorista: " + c.getValorMotorista());
-	//System.out.println("Valor para UberLand: " + c.getValorUberLand());
+	//System.out.println("Data/Hora Início: " + c.getDataHoraInicio());
+	//System.out.println("Data/Hora Fim: " + c.getDataHoraFim());
+	System.out.println("Distância Real Percorrida (km): " + c.getDistanciaRealKm());
+	System.out.println("Valor Total da Corrida: " + c.getValorTotal());
+	System.out.println("Valor para Motorista: " + c.getValorMotorista());
+	System.out.println("Valor para UberLand: " + c.getValorUberLand());
 	
 
 
