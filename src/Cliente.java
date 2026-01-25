@@ -3,14 +3,18 @@ public class Cliente extends Pessoa{
 	private String email;
 	private int sexo;
 	private String pagamento;
+	private int nroCorridas;
+	private boolean StatusVIP;
 	
 
-	public Cliente(String nome, String cpf, String datanasc, String cel, String email, int sexo) {
+	public Cliente(String nome, String cpf, String datanasc, String cel, String email, int sexo, int nroCorridas) {
 		super (nome, cpf, datanasc);
 		this.cel = cel;
 		this.email = email;
 		this.sexo = sexo;
 		this.pagamento = "Dinheiro";
+		this.nroCorridas = nroCorridas;
+		
 	}
 
 	public Cliente(String nome, String cpf) {
@@ -22,8 +26,21 @@ public class Cliente extends Pessoa{
 		this.sexo = 'N';	
 		this.pagamento = "CARTAO DE CREDITO";
 	}
-	
-	
+
+	public int getNroCorridas() {
+		return nroCorridas;
+	}
+	public void setNroCorridas(int nroCorridas) {
+		this.nroCorridas = nroCorridas;
+	}
+
+	public boolean isStatusVIP() {
+		return StatusVIP;
+	}
+	public void setStatusVIP(boolean statusVIP) {
+		StatusVIP = statusVIP;
+	}
+
 	public String getCel() {
 		return cel;
 	}
@@ -58,6 +75,14 @@ public class Cliente extends Pessoa{
 		};
 	}
 
+	public boolean verificarVip() {
+		if (nroCorridas >= 10) {
+			this.StatusVIP = true;
+		} else {
+			this.StatusVIP = false;
+		}
+		return this.StatusVIP;
+	}
 
 	public String getPagamento() {
 		return pagamento;
