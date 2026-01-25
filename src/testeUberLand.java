@@ -24,13 +24,13 @@ public class testeUberLand {
 		// ====================== CENÁRIO 1: A CORRIDA PERFEITA (UBER X) =================================
 		    System.out.println(">>> Teste 1: Corrida Finalizada com Sucesso (UberX com Ar)");
 
-		Corrida corrida1 = new Corrida(passageiro, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		Corrida corrida1 = new Corrida(passageiro, carroComfort, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
 		// Simula o fluxo
 		corrida1.iniciarCorrida();
 		
 		//Finaliza a viagem passando km e minutos (aqui o cálculo acontece)
 
-        corrida1.finalizarCorrida(10, 0.0); //10km, 20 minutos
+        corrida1.finalizarCorrida(10, 1.0); //10km
 
 		imprimirRelatorio(corrida1);
 
@@ -82,10 +82,16 @@ public class testeUberLand {
 	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao());
 	//System.out.println("Data/Hora Início: " + c.getDataHoraInicio());
 	//System.out.println("Data/Hora Fim: " + c.getDataHoraFim());
-	System.out.println("Distância Real Percorrida (km): " + c.getDistanciaRealKm());
-	System.out.println("Valor Total da Corrida: " + c.getValorTotal());
-	System.out.println("Valor para Motorista: " + c.getValorMotorista());
-	System.out.println("Valor para UberLand: " + c.getValorUberLand());
+	System.out.println("Distância Real Percorrida: " + c.getDistanciaRealKm() + " km");
+	System.out.println("Valor Total da Corrida: R$ " + String.format("%.2f", c.getValorTotal()));
+	System.out.println("Valor para Motorista: R$ " + String.format("%.2f", c.getValorMotorista()));
+	System.out.println("Valor para UberLand: R$ " + String.format("%.2f", c.getValorUberLand()));
+	
+	if(c.getValorExtra() > 0) {
+		System.out.println("Valor Extra Aplicado: Sim - R$ " + String.format("%.2f", c.getValorExtra()));
+	} else {
+		System.out.println("Valor Extra Aplicado: Não " );
+	}
 	
 
 
