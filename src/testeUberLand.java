@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class testeUberLand {
 
@@ -17,22 +18,34 @@ public class testeUberLand {
 	
 		// 2. Criar Cliente
 		
-		Cliente passageiro = new Cliente("João", "12345678901", "01012000", null, null, 0);
+		Cliente passageiro = new Cliente("Nanda", "12345678901", "01012000", null, null, 0, 0);
+		Cliente passageiroVip = new Cliente("Nanda", "12345678901", "01012000", null, null, 0, 11);
 
 		 System.out.println("=== INÍCIO DOS TESTES DE LÓGICA ===\n");
 
 		// ====================== CENÁRIO 1: A CORRIDA PERFEITA (UBER X) =================================
 		    System.out.println(">>> Teste 1: Corrida Finalizada com Sucesso (UberX com Ar)");
 
-		Corrida corrida1 = new Corrida(passageiro, carroComfort, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		Corrida corridaX = new Corrida(passageiro, carroComfort, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		Corrida corridaC = new Corrida(passageiro, carroComfort, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		Corrida corridaB = new Corrida(passageiro, carroComfort, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
 		// Simula o fluxo
-		corrida1.iniciarCorrida();
+		corridaX.iniciarCorrida();
+		corridaC.iniciarCorrida();
+		corridaB.iniciarCorrida();
+		
 		
 		//Finaliza a viagem passando km e minutos (aqui o cálculo acontece)
 
-        corrida1.finalizarCorrida(10, 1.0); //10km
-
-		imprimirRelatorio(corrida1);
+        corridaX.finalizarCorrida(10, 1.0); //10km
+		corridaC.finalizarCorrida(10, 0.0); //10km
+		corridaB.finalizarCorrida(10, 2.5); //10km
+		System.out.println("\n--- RELATÓRIO DA CORRIDA UBER X ---");
+		imprimirRelatorio(corridaX);
+		System.out.println("\n--- RELATÓRIO DA CORRIDA UBER COMFORT ---");
+		imprimirRelatorio(corridaC);
+		System.out.println("\n--- RELATÓRIO DA CORRIDA UBER BLACK ---");
+		imprimirRelatorio(corridaB);
 
 		// VERIFICAR NO CONSOLE: 
 
@@ -45,6 +58,10 @@ public class testeUberLand {
 
 
 		// Motorista aceitou, mas teve imprevisto antes de iniciar
+		System.out.println("\n--- RELATÓRIO DA CORRIDA CANCELADA ---");
+		Corrida corridaCancelada = new Corrida(passageiro, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		corridaCancelada.iniciarCorrida();
+		corridaCancelada.cancelarCorrida("Motorista");
 
 		// VERIFICAR NO CONSOLE:
 
@@ -52,9 +69,17 @@ public class testeUberLand {
 
         // Motivo/Autor está "Motorista"?
 
-        // Valor deve ser 0.
+       
 
 		// ================================ CENÁRIO 3: PROMOÇÃO VIP ====================================
+		System.out.println("\n>>> Teste 2: Corrida com Desconto para Cliente VIP <<<");
+
+		Corrida corridaVip = new Corrida(passageiroVip, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
+		corridaVip.iniciarCorrida();
+		corridaVip.finalizarCorrida(10, 3.0); //10km
+		System.out.println("\n--- RELATÓRIO DA CORRIDA VIP ---");
+		imprimirRelatorio(corridaVip);
+		// Tornar o cliente VIP
 
 		// Simula várias corridas curtas para atingir a meta (ex: supondo que a meta seja 3)
 
@@ -79,18 +104,32 @@ public class testeUberLand {
 	System.out.println("Veículo: " + c.getVeiculo().getModelo() +  " " + c.getVeiculo().getMarca() +  " " + c.getVeiculo().getCor());
 	System.out.println("Origem: " + c.getOrigem());
 	System.out.println("Destino: " + c.getDestino());
-	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao());
-	//System.out.println("Data/Hora Início: " + c.getDataHoraInicio());
-	//System.out.println("Data/Hora Fim: " + c.getDataHoraFim());
+	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+
+System.out.println("Data/Hora Início: " + c.getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+System.out.println("Data/Hora Fim: " + c.getDataHoraFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+	
 	System.out.println("Distância Real Percorrida: " + c.getDistanciaRealKm() + " km");
 	System.out.println("Valor Total da Corrida: R$ " + String.format("%.2f", c.getValorTotal()));
 	System.out.println("Valor para Motorista: R$ " + String.format("%.2f", c.getValorMotorista()));
 	System.out.println("Valor para UberLand: R$ " + String.format("%.2f", c.getValorUberLand()));
+	System.out.println("Forma de Pagamento: " + c.getCliente().getPagamento());
+
+
+
+	
+if (c.getValorDescontoVip() > 0) {
+    System.out.println("Cliente VIPs: [Sim]");
+    System.out.println("Desconto VIP Aplicado: -R$ " + String.format("%.2f", c.getValorDescontoVip()));
+} else {
+    System.out.println("Cliente VIP: [Não]");
+   
+}
 	
 	if(c.getValorExtra() > 0) {
-		System.out.println("Valor Extra Aplicado: Sim - R$ " + String.format("%.2f", c.getValorExtra()));
+		System.out.println("Valor Extra Aplicado: [Sim] R$ " + String.format("%.2f", c.getValorExtra()));
 	} else {
-		System.out.println("Valor Extra Aplicado: Não " );
+		System.out.println("Valor Extra Aplicado: [Não] " );
 	}
 	
 
@@ -98,13 +137,5 @@ public class testeUberLand {
 
 
 
-	// 	if (m.getStatusMotorista() == true) {
-	// 	//	m.exibirDadosMotorista();
-	// 				System.out.println("-----------------------");
-	// 		m.listarVeiculos();
-	// 	System.out.println("-----------------------");
-	// 	//	corrida1.exibirDadosCorrida();
-	// }	else
-	// 	System.out.println("Motorista inativo");
 	}
 }
