@@ -2,6 +2,7 @@ public class UberX extends Veiculos {
 	
 	public static final double TARIFA_MINIMA = 4.00;
     public static final double CUSTO_POR_KM = 1.20;
+	public static final double AR_CONDICIONADO_TAXA = 2.00;
 	private final boolean arCondicionado;
 	private final boolean confortoBasico;
 	
@@ -23,7 +24,7 @@ public class UberX extends Veiculos {
 
 	public double txArCondicionado() {
 		if (arCondicionado == true) {
-			return 1.2;
+			return AR_CONDICIONADO_TAXA;
 		} else {
 			return 0.0;
 		}
