@@ -5,22 +5,29 @@ public class testeUberLand {
 	public static void main(String[] args) {
    	// --- PREPARAÇÃO DO AMBIENTE ---
         // 1. Criar Motorista e Veículos
-		Motorista m = new Motorista("Sergio", "22169293876", "08091981", "Rua Brasil,10", "12345678901", "Sergio");
-		UberX carroX = new UberX("ABC-1234", "999999", "Prata", 4, 2023, "Fiat", "Mobi");
+		Motorista m = new Motorista("Sergio", "22169293876", "08091981", "Rua Brasil,10", "12345678901", true, "Sergio");
+		UberX carroX = new UberX("ABC1234", "12345678901234567", "Preto", 4, 2020, "Toyota", "Corolla", true, true);
+		UberBlack carroBlack = new UberBlack("DEF5678", "98765432109876543", "Branco", 4, 2021, "BMW", "Serie 5", true, true,  3);
+		UberComfort carroComfort = new UberComfort("GHI9012", "19283746556473829", "Prata", 4, 2019, "Honda", "Civic", true, true, true);
+
 	
-		Corrida corrida1 = new Corrida(carroX, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
-	
+		m.adicionarVeiculo(carroX);
+		m.adicionarVeiculo(carroComfort);
+		m.adicionarVeiculo(carroBlack);
 	
 		// 2. Criar Cliente
 		
 		Cliente passageiro = new Cliente("João", "12345678901", "01012000", null, null, 0);
 
+		 System.out.println("=== INÍCIO DOS TESTES DE LÓGICA ===\n");
+
 		// ====================== CENÁRIO 1: A CORRIDA PERFEITA (UBER X) =================================
+		    System.out.println(">>> Teste 1: Corrida Finalizada com Sucesso (UberX com Ar)");
 
-
+		Corrida corrida1 = new Corrida(null, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
 		// Simula o fluxo
-
-
+		corrida1.iniciarCorrida();
+		corrida1.exibirDadosCorrida();
 		//Finaliza a viagem passando km e minutos (aqui o cálculo acontece)
 
         // Digamos: 10km, 20 minutos
@@ -68,8 +75,11 @@ public class testeUberLand {
 
 
 		if (m.getStatusMotorista() == true) {
-			m.exibirDadosMotorista();
-			corrida1.exibirDadosCorrida();
+		//	m.exibirDadosMotorista();
+					System.out.println("-----------------------");
+			m.listarVeiculos();
+		System.out.println("-----------------------");
+		//	corrida1.exibirDadosCorrida();
 	}	else
 		System.out.println("Motorista inativo");
 	}
