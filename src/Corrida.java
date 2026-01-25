@@ -1,6 +1,7 @@
 import java.time.Duration; // Import novo (do segundo código) para calcular tempo
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.random.*;
 
 public class Corrida{ 
 
@@ -35,16 +36,22 @@ public class Corrida{
     private LocalDateTime dataHoraFim;    // chegada ao destino final
 
     // --- PREÇOS E TAXAS ---
+    private double valorParcial;
     private double valorTotal;
     private double valorMotorista;
     private double valorUberLand;
     public double PORCENTAGEM_UBERLAND = 0.40;
+    public double DESCONTO_VIP = 0.10; // 10% de desconto para clientes VIP
+    public double descontoVip;
     private double valorExtra;
+    private double valorDescontoVip;
+
     
     
 
     // --- STATUS ---
     private int statusCorrida; 
+    private boolean statusVip;
 
     // ==================================================================================
     // CONSTRUTOR (Mantive o SEU para funcionar com seu Main atual)
@@ -91,6 +98,12 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     public LocalDateTime getDataHoraSolicitacao() { return dataHoraSolicitacao; }
     public void setDataHoraSolicitacao(LocalDateTime dataHoraSolicitacao) { this.dataHoraSolicitacao = dataHoraSolicitacao; }
 
+    public LocalDateTime getDataHoraInicio() { return dataHoraInicio; }
+    public void setDataHoraInicio(LocalDateTime dataHoraInicio) { this.dataHoraInicio = dataHoraInicio; }
+    public LocalDateTime getDataHoraFim() { return dataHoraFim; }
+    public void setDataHoraFim(LocalDateTime dataHoraFim) { this.dataHoraFim = dataHoraFim; }
+
+
     public void setStatusCorrida(int statusCorrida) { this.statusCorrida = statusCorrida; }
 
     public double getValorTotal() { return valorTotal; }
@@ -101,23 +114,8 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     public double getValorUberLand() { return valorUberLand; }
     public void setValorUberLand(double valorUberLand) { this.valorUberLand = valorUberLand; }
 
-  
+   
 
-    // --- Getters e Setters Gabriel  ---
-    /*
-    public void setPagarValorExtra(boolean pagarValorExtra) {
-        if (statusCorrida == SOLICITADA) {
-            this.pagarValorExtra = pagarValorExtra;
-        }
-    }
-    
-    public boolean isPagarValorExtra() { return pagarValorExtra; }
-    
-    public int getDuracaoViagem() { return duracaoViagem; }
-    
-    public void setFormasPagamento(String formasPagamento) { this.formasPagamento = formasPagamento; }
-    public String getFormasPagamento() { return formasPagamento; }
-    */
 
     // Seu getStatusCorrida (String) mantido
     public String getStatusCorridaFormatado() { // Mudei o nome levemente para não dar conflito com o int getStatus
@@ -135,6 +133,18 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     // getter simples para o numero
     public int getStatusCorrida() { return statusCorrida; }
 
+    public boolean aplicarDescontoVip() {
+        boolean isVip = cliente.verificarVip();
+        if (isVip) {
+            this.descontoVip = DESCONTO_VIP;
+            return true;
+        } else {
+            this.descontoVip = 0.0;
+            return false;
+        }
+    }
+
+  
     // ==================================================================================
     // MÉTODOS DE LÓGICA
     // ==================================================================================
@@ -142,7 +152,8 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     public void iniciarCorrida() {
         if (this.statusCorrida == SOLICITADA) {
             this.statusCorrida = EM_ANDAMENTO;
-            this.dataHoraInicio = LocalDateTime.now(); // Captura hora inicio
+            //this.dataHoraInicio = LocalDateTime.now(); // Captura hora inicio
+            this.dataHoraInicio = this.dataHoraSolicitacao.plusMinutes(5);
             System.out.println("Corrida iniciada com sucesso.");
         }
     }
@@ -151,16 +162,23 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     public void finalizarCorrida(double distanciaRealKm, double valorExtraParam) { 
 
         if(this.statusCorrida == EM_ANDAMENTO){
+             aplicarDescontoVip();
             this.distanciaRealKm = distanciaRealKm;
             double valorviagem = this.veiculo.calcularCustoViagem(distanciaRealKm);
+            this.valorParcial = (valorviagem + valorExtraParam);     
+            valorDescontoVip = this.valorParcial * this.descontoVip; // Calcula o desconto VIP
+            double valorTotal = this.valorParcial - valorDescontoVip; // Aplica o desconto VIP ao valor total
+            this.valorTotal = valorTotal;
+            
+            
+            // Adiciona valor extra se aplicável
 
-            this.valorTotal = valorviagem + valorExtraParam; // Adiciona valor extra se aplicável
             this.statusCorrida = FINALIZADA;
-            System.out.println("Corrida Finalizada com Sucesso.");
+            System.out.println("Corrida Finalizada com Sucesso." );
              //calcularDivisaoCorrida(this); // Calcula a divisão dos valores
             this.valorUberLand = this.valorTotal * PORCENTAGEM_UBERLAND; // UberLand fica com 40%
             this.valorMotorista = this.valorTotal - this.valorUberLand; // Motorista recebe o resto
-            this.dataHoraFim = LocalDateTime.now(); // Captura hora fim
+            this.dataHoraFim = this.dataHoraInicio.plusMinutes(20);
             this.valorExtra = valorExtraParam; // Armazena o valor extra aplicado
       
         } else {
@@ -169,6 +187,12 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     }
 
 }
+
+public double getValorDescontoVip() {
+        return this.valorDescontoVip;
+    }
+
+ 
 
     public double getValorExtra() {
         return this.valorExtra;
