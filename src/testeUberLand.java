@@ -27,10 +27,12 @@ public class testeUberLand {
 		Corrida corrida1 = new Corrida(null, carroX, m, "UFU Campus Santa Mônica", "Dboche Pub Show", LocalDateTime.now());
 		// Simula o fluxo
 		corrida1.iniciarCorrida();
-		corrida1.exibirDadosCorrida();
+		
 		//Finaliza a viagem passando km e minutos (aqui o cálculo acontece)
 
-        // Digamos: 10km, 20 minutos
+        corrida1.finalizarCorrida(10); //10km, 20 minutos
+
+		imprimirRelatorio(corrida1);
 
 		// VERIFICAR NO CONSOLE: 
 
@@ -66,21 +68,35 @@ public class testeUberLand {
 
         // O valor tem desconto comparado a uma corrida normal?
 
-
+	}
 		
     // ======================= MÉTODO AUXILIAR PARA O RELATÓRIO ================
 
+	public void imprimirRelatorio(Corrida c){
+	System.out.println("Status: " + c.getStatusCorrida());
+	System.out.println("Motorista: " + c.getMotorista().getNome());
+	System.out.println("Cliente: " + c.getCliente().getNome());
+	System.out.println("Veículo: " + c.getVeiculo().getMarca() + c.getVeiculo().getCor());
+	System.out.println("Origem: " + c.getOrigem());
+	System.out.println("Destino: " + c.getDestino());
+	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao());
+	//System.out.println("Distância Real Percorrida (km): " + c.getDistanciaRealKm());
+	//System.out.println("Valor Total da Corrida: " + c.getValorTotal());
+	//System.out.println("Valor para Motorista: " + c.getValorMotorista());
+	//System.out.println("Valor para UberLand: " + c.getValorUberLand());
+	
 
 
 
 
-		if (m.getStatusMotorista() == true) {
-		//	m.exibirDadosMotorista();
-					System.out.println("-----------------------");
-			m.listarVeiculos();
-		System.out.println("-----------------------");
-		//	corrida1.exibirDadosCorrida();
-	}	else
-		System.out.println("Motorista inativo");
+
+	// 	if (m.getStatusMotorista() == true) {
+	// 	//	m.exibirDadosMotorista();
+	// 				System.out.println("-----------------------");
+	// 		m.listarVeiculos();
+	// 	System.out.println("-----------------------");
+	// 	//	corrida1.exibirDadosCorrida();
+	// }	else
+	// 	System.out.println("Motorista inativo");
 	}
 }
