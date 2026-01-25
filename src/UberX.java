@@ -20,6 +20,13 @@ public class UberX extends Veiculos {
 		return confortoBasico;
 	}
 
+	public double txArCondicionado() {
+		if (arCondicionado == true) {
+			return 1.0;
+		} else {
+			return 0.0;
+		}
+	}
 
 	// @Override garante que este método está substituindo corretamente o da classe pai.
 	@Override
