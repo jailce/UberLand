@@ -1,5 +1,5 @@
 
-public class Veiculos {
+public abstract class Veiculos {
 
 	  // --- Definindo os Status como constantes ---
     public static final int DISPONIVEL = 1;
@@ -16,7 +16,7 @@ public class Veiculos {
     private String modelo;
     private int status; 
     private boolean ativo;    //carro inativo => ativo = false e deletado=false
-	//private boolean deletado; // carro ativo => ativo = true e deletado=false
+	private boolean deletado; // carro ativo => ativo = true e deletado=false
                               // carro deletado=> ativo=false e deletado = true	
     
     public Veiculos(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo) {
@@ -31,7 +31,7 @@ public class Veiculos {
 		// Define direto aqui, sem pedir no main
     	this.status = DISPONIVEL;
     	this.ativo = true; // Pode usar 'this.ativo' se quiser manter o padrão
-    	//this.deletado = false;
+    	this.deletado = false;
 	}
     
     // Getters:
@@ -123,10 +123,7 @@ public class Veiculos {
 	}
 	
 	public double calcularCustoViagem(double distanciaKm) {
-	    if (distanciaKm < 0)
-	        return getTarifaMinima();
-	    
-	    return (distanciaKm * getCustoKm()) + getTarifaMinima();
+		return  (getCustoKm() * distanciaKm) + getTarifaMinima();
 	}
 	
 	  // Método base para exibir dados:
