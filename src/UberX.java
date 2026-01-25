@@ -6,10 +6,11 @@ public class UberX extends Veiculos {
 	private final boolean confortoBasico;
 	
 	
-	public UberX(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo, boolean arCondicionado,boolean confortoBasico) {
+	public UberX(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo, boolean confortoBasico, boolean arCondicionado) {
         super(placa, chassi, cor, capacidade, ano, marca, modelo);
-        this.arCondicionado = arCondicionado = true;
-        this.confortoBasico = confortoBasico;
+		this.confortoBasico = confortoBasico;
+        this.arCondicionado = arCondicionado;
+
 	}
 
 	public boolean isArCondicionado() {
@@ -22,7 +23,7 @@ public class UberX extends Veiculos {
 
 	public double txArCondicionado() {
 		if (arCondicionado == true) {
-			return 1.0;
+			return 1.2;
 		} else {
 			return 0.0;
 		}
@@ -41,12 +42,8 @@ public class UberX extends Veiculos {
 
 	@Override
 	public double calcularCustoViagem(double distanciaKm) {
-	   double custoTotal = super.calcularCustoViagem(distanciaKm);
+		return distanciaKm * CUSTO_POR_KM + TARIFA_MINIMA + txArCondicionado();
 	    
-	    if (arCondicionado == true || confortoBasico == true)// Regra Extra: Ar OU Conforto Basico = +1 Tarifas Mínimas
-	    	custoTotal += getTarifaMinima();
-	    
-	   	return custoTotal;
 	}
 	
     public void exibirDadosUX(){
