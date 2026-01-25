@@ -16,7 +16,7 @@ public class Veiculos {
     private String modelo;
     private int status; 
     private boolean ativo;    //carro inativo => ativo = false e deletado=false
-	private boolean deletado; // carro ativo => ativo = true e deletado=false
+	//private boolean deletado; // carro ativo => ativo = true e deletado=false
                               // carro deletado=> ativo=false e deletado = true	
     
     public Veiculos(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo) {
@@ -27,10 +27,11 @@ public class Veiculos {
     	this.ano = ano;
     	this.marca = marca;
     	this.modelo = modelo;
-    
+
+		// Define direto aqui, sem pedir no main
     	this.status = DISPONIVEL;
-    	this.ativo = false; // Pode usar 'this.ativo' se quiser manter o padrão
-    	this.deletado = false;
+    	this.ativo = true; // Pode usar 'this.ativo' se quiser manter o padrão
+    	//this.deletado = false;
 	}
     
     // Getters:

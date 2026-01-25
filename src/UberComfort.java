@@ -7,10 +7,8 @@ public class UberComfort extends Veiculos {
 	private final boolean arDualZone;
 	
 	
-	public UberComfort(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo, boolean espacoExtra,
-            boolean bancoReclinavel, boolean arDualZone) {
+	public UberComfort(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo, boolean espacoExtra, boolean bancoReclinavel, boolean arDualZone) {
 		super(placa, chassi, cor, capacidade, ano, marca, modelo);
-
 		this.espacoExtra = espacoExtra;
 		this.bancoReclinavel = bancoReclinavel;
 		this.arDualZone = arDualZone;

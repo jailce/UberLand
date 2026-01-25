@@ -6,8 +6,7 @@ public class UberBlack extends Veiculos {
 	private final boolean interiorPremium; 
 	private int qtdsMalas;
 
-	public UberBlack(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo,
-        	boolean rodasLigaLeve, boolean interiorPremium, int qtdsMalas) {
+	public UberBlack(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo,  	boolean rodasLigaLeve, boolean interiorPremium, int qtdsMalas) {
 		super(placa, chassi, cor, capacidade, ano, marca, modelo);
 
 		this.rodasLigaLeve = rodasLigaLeve;

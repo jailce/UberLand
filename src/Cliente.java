@@ -1,18 +1,18 @@
 public class Cliente extends Pessoa{
 	private String cel;
 	private String email;
-	private char sexo;
+	private int sexo;
 	private String pagamento;
 	
 
-	public Cliente(String nome, String cpf, String datanasc, String cel, String email, char sexo) {
+	public Cliente(String nome, String cpf, String datanasc, String cel, String email, int sexo) {
 		super (nome, cpf, datanasc);
 		this.cel = cel;
 		this.email = email;
 		this.sexo = sexo;
 		this.pagamento = "Dinheiro";
 	}
-	
+
 	public Cliente(String nome, String cpf) {
 		super (nome, cpf);
 	}
@@ -45,15 +45,15 @@ public class Cliente extends Pessoa{
 	    }
 	}
 
-	public char getSexo() {
+	public int getSexo() {
 		return sexo;
 	}
-	public void setSexo(char sexo) {
+	public void setSexo(int sexo) {
 		sexo = Character.toUpperCase(sexo);
 		
 		this.sexo = switch (sexo) {
-   			case 'M' -> 'M';
-   			case 'F' -> 'F';
+   			case 1 -> 'M';
+   			case 2 -> 'F';
    			default -> 'N';
 		};
 	}
