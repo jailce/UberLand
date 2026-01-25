@@ -15,3 +15,5 @@ public class ClienteVip extends Cliente{
 
 		
 }
+
+//acho melhoror criar um metodo pra cliente vip em cliente
