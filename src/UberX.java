@@ -8,7 +8,7 @@ public class UberX extends Veiculos {
 	
 	public UberX(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo, boolean arCondicionado,boolean confortoBasico) {
         super(placa, chassi, cor, capacidade, ano, marca, modelo);
-        this.arCondicionado = arCondicionado;
+        this.arCondicionado = arCondicionado = true;
         this.confortoBasico = confortoBasico;
 	}
 
