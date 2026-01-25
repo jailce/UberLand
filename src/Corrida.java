@@ -40,7 +40,7 @@ public class Corrida extends RegrasUberLand {
     private double valorUberLand;
     
     private static final double VALOR_EXTRA = 5.00; 
-    private static final double PORCENTAGEM_APP = 0.40; 
+    //private static final double PORCENTAGEM_APP = 0.40; 
 
     // --- STATUS ---
     private int statusCorrida; 
@@ -130,39 +130,28 @@ public class Corrida extends RegrasUberLand {
         }
     }
 
+    //A finalizarCorrida é calculado o valor total da corrida, o valor que o motorista irá receber e o valor que a UberLand irá reter.
     public void finalizarCorrida(double distanciaRealKm, double valorTotalFinal, double valorUberLandFinal) { 
         
+
         
         if (this.statusCorrida == EM_ANDAMENTO) {
             this.statusCorrida = FINALIZADA;
-            this.dataHoraFim = LocalDateTime.now(); // Captura hora fim
-            this.distanciaRealKm = distanciaRealKm; // Usa o parametro recebido
-            
-        
-            this.valorTotal = valorTotalFinal;
-            this.valorMotorista = valorTotalFinal - valorUberLandFinal; 
-            this.valorUberLand = valorUberLandFinal;
+            distanciaRealKm * CUSTO_POR_KM + TARIFA_MINIMA + txArCondicionado
             
             
-            /*
+            
             // 1. Calcular Duração
-            if (dataHoraInicio != null && dataHoraFim != null) {
-                this.duracaoViagem = (int) Duration.between(dataHoraInicio, dataHoraFim).toMinutes();
-            }
-            
+        
             // 2. Calcular Custo usando o Veículo (Polimorfismo)
-            double custoBase = veiculo.calcularCustoViagem(this.distanciaRealKm);
+      
             
             // 3. Adicionar Extra
-            if (this.pagarValorExtra) {
-                this.valorTotal = custoBase + VALOR_EXTRA;
-            } else {
-                this.valorTotal = custoBase;
-            }
+ 
             
             // 4. Calcular Divisão (Exemplo chamando classe externa)
-            // RegrasUberLand.calcularDivisaoCorrida(this);
-            */
+        
+          
 
             System.out.println("Corrida finalizada com sucesso.");
         } else {
@@ -237,13 +226,5 @@ public class Corrida extends RegrasUberLand {
     }
 
 
-    public void imprimirRelatorioCorrida(Corrida c) {
-        if (c.getStatusCorrida() == FINALIZADA) {
-            c.exibirDadosCorridaFinalizada();
-        } else if (c.getStatusCorrida() == CANCELADA) {
-            c.exibirDadosCorridaCancelada();
-        } else {
-            System.out.println("A corrida ainda nao foi finalizada ou cancelada.");
-        }
-    }
+
 }
