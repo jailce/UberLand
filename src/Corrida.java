@@ -2,7 +2,7 @@ import java.time.Duration; // Import novo (do segundo código) para calcular tem
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Corrida extends RegrasUberLand { 
+public class Corrida{ 
 
     // --- CONSTANTES (Mantidas e Organizadas) ---
     public static final int SOLICITADA = 0;
@@ -38,9 +38,10 @@ public class Corrida extends RegrasUberLand {
     private double valorTotal;
     private double valorMotorista;
     private double valorUberLand;
+    public double PORCENTAGEM_UBERLAND = 0.40;
+    private double valorExtra;
     
-   
-    //private static final double PORCENTAGEM_APP = 0.40; 
+    
 
     // --- STATUS ---
     private int statusCorrida; 
@@ -56,9 +57,10 @@ public class Corrida extends RegrasUberLand {
         setDestino(destino);
         setDataHoraSolicitacao(dataHoraSolicitacao);
         this.statusCorrida = SOLICITADA;
-        
-        
-        // this.pagarValorExtra = false; 
+
+
+
+        // this.pagarValorExtra = false;
     }
 
     // ==================================================================================
@@ -95,10 +97,11 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }
 
     public double getValorMotorista() { return valorMotorista; }
-    public void setValorMotorista(double valorMotorista) { this.valorMotorista = valorMotorista;
-    } 
+    public void setValorMotorista(double valorMotorista) { this.valorMotorista = valorMotorista;} 
     public double getValorUberLand() { return valorUberLand; }
     public void setValorUberLand(double valorUberLand) { this.valorUberLand = valorUberLand; }
+
+  
 
     // --- Getters e Setters Gabriel  ---
     /*
@@ -145,25 +148,30 @@ public void setDistanciaRealKm(double distanciaRealKm) {
     }
 
     //A finalizarCorrida é calculado o valor total da corrida, o valor que o motorista irá receber e o valor que a UberLand irá reter.
-    public void finalizarCorrida(double distanciaRealKm, double valorExtra) { 
+    public void finalizarCorrida(double distanciaRealKm, double valorExtraParam) { 
 
         if(this.statusCorrida == EM_ANDAMENTO){
             this.distanciaRealKm = distanciaRealKm;
             double valorviagem = this.veiculo.calcularCustoViagem(distanciaRealKm);
 
-            this.valorTotal = valorviagem + valorExtra; // Adiciona valor extra se aplicável
+            this.valorTotal = valorviagem + valorExtraParam; // Adiciona valor extra se aplicável
             this.statusCorrida = FINALIZADA;
             System.out.println("Corrida Finalizada com Sucesso.");
              //calcularDivisaoCorrida(this); // Calcula a divisão dos valores
-            this.valorUberLand = this.valorTotal * 0.40; // UberLand fica com 40%
+            this.valorUberLand = this.valorTotal * PORCENTAGEM_UBERLAND; // UberLand fica com 40%
             this.valorMotorista = this.valorTotal - this.valorUberLand; // Motorista recebe o resto
             this.dataHoraFim = LocalDateTime.now(); // Captura hora fim
-        
+            this.valorExtra = valorExtraParam; // Armazena o valor extra aplicado
       
         } else {
             System.out.println("A corrida nao esta em andamento.");
         
     }
+
+}
+
+    public double getValorExtra() {
+        return this.valorExtra;
     }
     public void cancelarCorrida(String motivoCancelamento) {
      
