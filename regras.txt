@@ -45,10 +45,10 @@ f)  - UberX
         - Banco Reclinavel
         - Rodas de liga leve
         - Numero de malas
-         - taxa minima e por km diferentes
-
+        - taxa minima e por km diferentes
+        Cálculo do Custo da Viagem Fórmula base = (Km * Custo/km) + Tarifa Mínima + (numero de malas * tx malas)
         
-g) Cálculo do Custo da Viagem Fórmula base = (Km * Custo/km) + Tarifa Mínima + (numero de malas * tx malas)
+g) Cálculo do Custo da Viagem Fórmula base = (Km * Custo/km) + Tarifa Mínima e afins
 
 h)Cadastro de Usuário (Passageiro) Dados: 
 - Nome
