@@ -235,4 +235,15 @@ public class Corrida extends RegrasUberLand {
         // if (canceladaPor) System.out.println("Cancelada pelo Cliente");
         // else System.out.println("Cancelada pelo Motorista");
     }
+
+
+    public void imprimirRelatorioCorrida(Corrida c) {
+        if (c.getStatusCorrida() == FINALIZADA) {
+            c.exibirDadosCorridaFinalizada();
+        } else if (c.getStatusCorrida() == CANCELADA) {
+            c.exibirDadosCorridaCancelada();
+        } else {
+            System.out.println("A corrida ainda nao foi finalizada ou cancelada.");
+        }
+    }
 }
