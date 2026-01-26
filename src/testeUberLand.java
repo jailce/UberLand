@@ -19,7 +19,7 @@ public class testeUberLand {
 		// 2. Criar Cliente
 		
 		Cliente passageiro = new Cliente("Nanda", "12345678901", "01012000", null, null, 0, 0);
-		Cliente passageiroVip = new Cliente("Nanda", "12345678901", "01012000", null, null, 0, 11);
+		Cliente passageiroVip = new Cliente("Nanda", "12345678901", "01012000", null, null, 0, 12);
 
 		 System.out.println("=== INÍCIO DOS TESTES DE LÓGICA ===\n");
 
