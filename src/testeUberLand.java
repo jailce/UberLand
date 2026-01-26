@@ -106,9 +106,9 @@ public class testeUberLand {
 	System.out.println("Destino: " + c.getDestino());
 	System.out.println("Data/Hora Solicitação: " + c.getDataHoraSolicitacao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
-System.out.println("Data/Hora Início: " + c.getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
-System.out.println("Data/Hora Fim: " + c.getDataHoraFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
-	
+	System.out.println("Data/Hora Início: " + c.getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+	System.out.println("Data/Hora Fim: " + c.getDataHoraFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+
 	System.out.println("Distância Real Percorrida: " + c.getDistanciaRealKm() + " km");
 	System.out.println("Valor Total da Corrida: R$ " + String.format("%.2f", c.getValorTotal()));
 	System.out.println("Valor para Motorista: R$ " + String.format("%.2f", c.getValorMotorista()));

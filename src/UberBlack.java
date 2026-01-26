@@ -6,7 +6,6 @@ public class UberBlack extends Veiculos {
 	private final boolean rodasLigaLeve;
 	private final boolean interiorPremium; 
 	private int qtdsMalas;
-	private double txMalas = 1.00; // taxa por mala
 
 	public UberBlack(String placa, String chassi, String cor, int capacidade, int ano, String marca, String modelo,  	boolean rodasLigaLeve, boolean interiorPremium, int qtdsMalas) {
 		super(placa, chassi, cor, capacidade, ano, marca, modelo);
